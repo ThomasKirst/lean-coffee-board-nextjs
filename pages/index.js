@@ -1,18 +1,40 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import styled from 'styled-components';
-import Card from '../components/Card';
-import Form from '../components/Form';
+import styled from "styled-components";
+import Card from "../components/Card";
+import Form from "../components/Form";
+import { getAllQuestions } from "../services/questionsService";
 
-export default function Home() {
-  const [cardList, setCardList] = useState([]);
+export async function getServerSideProps() {
+  const questions = await getAllQuestions();
 
-  function addCard(newCard) {
-    setCardList([newCard, ...cardList]);
+  return {
+    props: {
+      questions: questions,
+    },
+  };
+}
+
+export default function Home({ questions }) {
+  const [questionList, setQuestionList] = useState(questions);
+
+  async function removeQuestion(id) {
+    await fetch(`api/question/${id}`, {
+      method: "DELETE",
+    });
+    setQuestionList(
+      questionList.filter((question) => {
+        return question.id !== id;
+      })
+    );
   }
 
-  function removeCard(id) {
-    setCardList(cardList.filter((card) => card.id !== id));
+  async function getQuestions() {
+    const response = await fetch("api/question/", {
+      method: "GET",
+    });
+    const newQuestionList = await response.json();
+    setQuestionList(newQuestionList.questions);
   }
 
   return (
@@ -22,19 +44,19 @@ export default function Home() {
         <Card name="Lene" text="Was sind ServerSideProps?" />
         <Card name="Merle" text="Wo ist mein Fahrrad?" />
         <Card name="Thomas" text="Können wir Tailwind machen?" />
-        {cardList.map((card) => {
+        {questionList.map((question) => {
           return (
             <Card
-              key={card.id}
-              name={card.name}
-              text={card.text}
-              onRemoveCard={removeCard}
-              id={card.id}
+              key={question.id}
+              name={question.name}
+              text={question.text}
+              onRemoveQuestion={removeQuestion}
+              id={question.id}
             />
           );
         })}
       </CardGrid>
-      <Form onAddCard={addCard} />
+      <Form onAddQuestion={getQuestions} />
     </BoardWrapper>
   );
 }

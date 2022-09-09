@@ -1,11 +1,11 @@
-import { RiDeleteBinLine } from 'react-icons/ri';
-import styled from 'styled-components';
+import { RiDeleteBinLine } from "react-icons/ri";
+import styled from "styled-components";
 
-export default function Card({ name, text, onRemoveCard, id }) {
+export default function Card({ name, text, onRemoveQuestion, id }) {
   return (
     <CardWrapper>
       <IconWrapper>
-        <RiDeleteBinLine onClick={() => onRemoveCard(id)} />
+        <RiDeleteBinLine onClick={() => onRemoveQuestion(id)} />
       </IconWrapper>
       <p>{text}</p>
       <Name>{name}</Name>
