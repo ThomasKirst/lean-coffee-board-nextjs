@@ -1,14 +1,86 @@
-import { RiDeleteBinLine } from "react-icons/ri";
 import styled from "styled-components";
+import { useState } from "react";
 
-export default function Card({ name, text, onRemoveQuestion, id }) {
+import { RiDeleteBinLine } from "react-icons/ri";
+import { AiOutlineSave } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
+
+export default function Card({
+  name,
+  text,
+  onRemoveQuestion,
+  id,
+  onUpdateQuestion,
+}) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [questionText, setQuestionText] = useState(text);
+  const [questionName, setQuestionName] = useState(name);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const updatedQuestion = {
+      text: questionText,
+      name: questionName,
+    };
+
+    await fetch(`api/question/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedQuestion),
+    });
+
+    onUpdateQuestion();
+
+    setIsEditing(false);
+  }
+
   return (
     <CardWrapper>
       <IconWrapper>
         <RiDeleteBinLine onClick={() => onRemoveQuestion(id)} />
       </IconWrapper>
-      <p>{text}</p>
-      <Name>{name}</Name>
+      {!isEditing && (
+        <>
+          <p>{text}</p>
+          <IconWrapper>
+            <AiOutlineEdit onClick={() => setIsEditing(true)} />
+          </IconWrapper>
+          <Name>{name}</Name>
+        </>
+      )}
+      {isEditing && (
+        <>
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+          >
+            <label htmlFor="text"></label>
+            <Input
+              name="text"
+              id="text"
+              type="text"
+              defaultValue={text}
+              onChange={(event) => {
+                setQuestionText(event.target.value);
+              }}
+            ></Input>
+            <label htmlFor="name"></label>
+            <Input
+              name="name"
+              id="name"
+              type="text"
+              defaultValue={name}
+              onChange={(event) => {
+                setQuestionName(event.target.value);
+              }}
+            ></Input>
+            <IconWrapper>
+              <AiOutlineSave />
+            </IconWrapper>
+          </form>
+        </>
+      )}
     </CardWrapper>
   );
 }
@@ -30,10 +102,22 @@ const Name = styled.div`
   color: darkslategray;
 `;
 
-const IconWrapper = styled.span`
+const IconWrapper = styled.button`
   display: flex;
-  justify-content: end;
   align-items: center;
-  width: 100%;
+  width: 2rem;
   color: #fe4b13;
+  background: transparent;
+  border: none;
+  justify-self: end;
+`;
+
+const Input = styled.input`
+  color: black;
+  padding: 0.2rem;
+  width: calc(100% - 2rem);
+
+  /* &:focus {
+    outline: none;
+  } */
 `;

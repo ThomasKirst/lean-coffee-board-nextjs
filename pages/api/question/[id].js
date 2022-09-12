@@ -11,4 +11,15 @@ export default async function handler(request, response) {
 
     response.status(200).json({ message: "question deleted" });
   }
+
+  if (request.method === "PUT") {
+    const id = request.query.id;
+
+    await Question.findByIdAndUpdate(id, {
+      text: request.body.text,
+      name: request.body.name,
+    });
+
+    response.status(200).json({ message: "question updated" });
+  }
 }

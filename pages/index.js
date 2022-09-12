@@ -48,6 +48,7 @@ export default function Home({ questions }) {
               text={question.text}
               onRemoveQuestion={removeQuestion}
               id={question.id}
+              onUpdateQuestion={getQuestions}
             />
           );
         })}
