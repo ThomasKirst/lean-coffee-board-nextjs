@@ -11,7 +11,7 @@ export default async function handler(request, response) {
     const data = request.body;
 
     const newCard = await Question.create(data);
-    console.log(newCard);
-    return response.status(201).json({ newCard: data });
+
+    return response.status(201).json(newCard);
   }
 }
