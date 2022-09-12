@@ -24,7 +24,7 @@ export default function Card({
       name: questionName,
     };
 
-    await fetch(`api/question/${id}`, {
+    await fetch(`api/questions/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedQuestion),
@@ -57,7 +57,7 @@ export default function Card({
               name="text"
               id="text"
               type="text"
-              value={text}
+              value={questionText}
               onChange={(event) => {
                 setQuestionText(event.target.value);
               }}
@@ -67,7 +67,7 @@ export default function Card({
               name="name"
               id="name"
               type="text"
-              value={name}
+              value={questionName}
               onChange={(event) => {
                 setQuestionName(event.target.value);
               }}
