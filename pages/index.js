@@ -19,16 +19,14 @@ export default function Home({ questions }) {
   const [questionList, setQuestionList] = useState(questions);
 
   async function removeQuestion(id) {
-    await fetch(`api/question/${id}`, {
+    await fetch(`api/questions/${id}`, {
       method: 'DELETE',
     });
     getQuestions();
   }
 
   async function getQuestions() {
-    const response = await fetch('api/question/', {
-      method: 'GET',
-    });
+    const response = await fetch('api/questions');
     const newQuestionList = await response.json();
     setQuestionList(newQuestionList);
   }

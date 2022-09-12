@@ -5,7 +5,11 @@ export default function Card({ name, text, onRemoveQuestion, id }) {
   return (
     <CardWrapper>
       <IconWrapper>
-        <RiDeleteBinLine onClick={() => onRemoveQuestion(id)} />
+        <RiDeleteBinLine
+          onClick={() =>
+            typeof onRemoveQuestion === 'function' && onRemoveQuestion(id)
+          }
+        />
       </IconWrapper>
       <p>{text}</p>
       <Name>{name}</Name>
