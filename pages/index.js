@@ -36,10 +36,6 @@ export default function Home({ questions }) {
   return (
     <BoardWrapper>
       <CardGrid>
-        <Card name="Niklas" text="Async/await oder .then?" />
-        <Card name="Lene" text="Was sind ServerSideProps?" />
-        <Card name="Merle" text="Wo ist mein Fahrrad?" />
-        <Card name="Thomas" text="Können wir Tailwind machen?" />
         {questionList.map((question) => {
           return (
             <Card

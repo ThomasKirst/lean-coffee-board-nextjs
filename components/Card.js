@@ -51,16 +51,13 @@ export default function Card({
       )}
       {isEditing && (
         <>
-          <form
-            onSubmit={handleSubmit}
-            style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-          >
+          <Form onSubmit={handleSubmit}>
             <label htmlFor="text"></label>
             <Input
               name="text"
               id="text"
               type="text"
-              defaultValue={text}
+              value={text}
               onChange={(event) => {
                 setQuestionText(event.target.value);
               }}
@@ -70,7 +67,7 @@ export default function Card({
               name="name"
               id="name"
               type="text"
-              defaultValue={name}
+              value={name}
               onChange={(event) => {
                 setQuestionName(event.target.value);
               }}
@@ -78,7 +75,7 @@ export default function Card({
             <IconWrapper>
               <AiOutlineSave />
             </IconWrapper>
-          </form>
+          </Form>
         </>
       )}
     </CardWrapper>
@@ -112,12 +109,14 @@ const IconWrapper = styled.button`
   justify-self: end;
 `;
 
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
 const Input = styled.input`
   color: black;
   padding: 0.2rem;
   width: calc(100% - 2rem);
-
-  /* &:focus {
-    outline: none;
-  } */
 `;
