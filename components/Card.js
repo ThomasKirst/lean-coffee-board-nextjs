@@ -1,5 +1,5 @@
-import { RiDeleteBinLine } from "react-icons/ri";
-import styled from "styled-components";
+import { RiDeleteBinLine } from 'react-icons/ri';
+import styled from 'styled-components';
 
 export default function Card({ name, text, onRemoveQuestion, id }) {
   return (

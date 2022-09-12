@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { BsPlusCircleFill } from "react-icons/bs";
+import styled from 'styled-components';
+import { BsPlusCircleFill } from 'react-icons/bs';
 
 export default function Form({ onAddQuestion }) {
   async function handleSubmit(event) {
@@ -14,9 +14,9 @@ export default function Form({ onAddQuestion }) {
       name: name,
     };
 
-    await fetch("/api/question/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    await fetch('/api/question/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newCard),
     });
 
