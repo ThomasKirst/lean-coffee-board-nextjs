@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { useState } from "react";
+import styled from 'styled-components';
+import { useState } from 'react';
 
-import { RiDeleteBinLine } from "react-icons/ri";
-import { AiOutlineSave } from "react-icons/ai";
-import { AiOutlineEdit } from "react-icons/ai";
+import { RiDeleteBinLine } from 'react-icons/ri';
+import { AiOutlineSave } from 'react-icons/ai';
+import { AiOutlineEdit } from 'react-icons/ai';
 
 export default function Card({
   name,
@@ -25,8 +25,8 @@ export default function Card({
     };
 
     await fetch(`api/question/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedQuestion),
     });
 

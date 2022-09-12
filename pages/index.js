@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import styled from "styled-components";
-import Card from "../components/Card";
-import Form from "../components/Form";
-import { getAllQuestions } from "../services/questionsService";
+import styled from 'styled-components';
+import Card from '../components/Card';
+import Form from '../components/Form';
+import { getAllQuestions } from '../services/questionsService';
 
 export async function getServerSideProps() {
   const questions = await getAllQuestions();
@@ -20,14 +20,14 @@ export default function Home({ questions }) {
 
   async function removeQuestion(id) {
     await fetch(`api/question/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
     });
     getQuestions();
   }
 
   async function getQuestions() {
-    const response = await fetch("api/question/", {
-      method: "GET",
+    const response = await fetch('api/question/', {
+      method: 'GET',
     });
     const newQuestionList = await response.json();
     setQuestionList(newQuestionList);

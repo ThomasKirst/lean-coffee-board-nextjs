@@ -1,5 +1,5 @@
-import dbConnect from "../dbConnect";
-import Question from "../models/Question";
+import dbConnect from '../dbConnect';
+import Question from '../models/Question';
 
 export async function getAllQuestions() {
   await dbConnect();

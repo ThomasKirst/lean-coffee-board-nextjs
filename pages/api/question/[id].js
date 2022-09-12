@@ -1,18 +1,18 @@
-import dbConnect from "../../../dbConnect";
-import Question from "../../../models/Question";
+import dbConnect from '../../../dbConnect';
+import Question from '../../../models/Question';
 
 export default async function handler(request, response) {
   await dbConnect();
 
-  if (request.method === "DELETE") {
+  if (request.method === 'DELETE') {
     const id = request.query.id;
 
     await Question.findByIdAndDelete(id);
 
-    response.status(200).json({ message: "question deleted" });
+    response.status(200).json({ message: 'question deleted' });
   }
 
-  if (request.method === "PUT") {
+  if (request.method === 'PUT') {
     const id = request.query.id;
 
     await Question.findByIdAndUpdate(id, {
@@ -20,6 +20,6 @@ export default async function handler(request, response) {
       name: request.body.name,
     });
 
-    response.status(200).json({ message: "question updated" });
+    response.status(200).json({ message: 'question updated' });
   }
 }

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
@@ -8,6 +8,6 @@ const questionSchema = new Schema({
 });
 
 const Question =
-  mongoose.models.Question || mongoose.model("Question", questionSchema);
+  mongoose.models.Question || mongoose.model('Question', questionSchema);
 
 export default Question;
