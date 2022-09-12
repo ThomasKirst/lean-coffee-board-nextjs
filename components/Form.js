@@ -16,6 +16,7 @@ export default function Form({ onAddQuestion }) {
 
     await fetch("/api/question/create", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newCard),
     });
 

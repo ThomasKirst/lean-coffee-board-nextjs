@@ -22,11 +22,7 @@ export default function Home({ questions }) {
     await fetch(`api/question/${id}`, {
       method: "DELETE",
     });
-    setQuestionList(
-      questionList.filter((question) => {
-        return question.id !== id;
-      })
-    );
+    getQuestions();
   }
 
   async function getQuestions() {
@@ -34,7 +30,7 @@ export default function Home({ questions }) {
       method: "GET",
     });
     const newQuestionList = await response.json();
-    setQuestionList(newQuestionList.questions);
+    setQuestionList(newQuestionList);
   }
 
   return (

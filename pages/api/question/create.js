@@ -5,12 +5,10 @@ export default async function handler(request, response) {
   await dbConnect();
 
   if (request.method === "POST") {
-    const data = JSON.parse(request.body);
+    const data = request.body;
 
     await Question.create(data);
 
-    response.status(200).json({
-      message: "question created",
-    });
+    response.status(201).json({ newCard: data });
   }
 }
