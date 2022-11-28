@@ -3,38 +3,51 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Card from '../components/Card';
 import Form from '../components/Form';
+import { getAllQuestions } from '../services/questionsService';
 
-export default function Home() {
-  const [cardList, setCardList] = useState([]);
+export async function getServerSideProps() {
+  const questions = await getAllQuestions();
 
-  function addCard(newCard) {
-    setCardList([newCard, ...cardList]);
+  return {
+    props: {
+      questions: questions,
+    },
+  };
+}
+
+export default function Home({ questions }) {
+  const [questionList, setQuestionList] = useState(questions);
+
+  async function removeQuestion(id) {
+    await fetch(`api/questions/${id}`, {
+      method: 'DELETE',
+    });
+    getQuestions();
   }
 
-  function removeCard(id) {
-    setCardList(cardList.filter((card) => card.id !== id));
+  async function getQuestions() {
+    const response = await fetch('api/questions');
+    const newQuestionList = await response.json();
+    setQuestionList(newQuestionList);
   }
 
   return (
     <BoardWrapper>
       <CardGrid>
-        <Card name="Niklas" text="Async/await oder .then?" />
-        <Card name="Lene" text="Was sind ServerSideProps?" />
-        <Card name="Merle" text="Wo ist mein Fahrrad?" />
-        <Card name="Thomas" text="Können wir Tailwind machen?" />
-        {cardList.map((card) => {
+        {questionList.map((question) => {
           return (
             <Card
-              key={card.id}
-              name={card.name}
-              text={card.text}
-              onRemoveCard={removeCard}
-              id={card.id}
+              key={question.id}
+              name={question.name}
+              text={question.text}
+              onRemoveQuestion={removeQuestion}
+              id={question.id}
+              onUpdateQuestion={getQuestions}
             />
           );
         })}
       </CardGrid>
-      <Form onAddCard={addCard} />
+      <Form onAddQuestion={getQuestions} />
     </BoardWrapper>
   );
 }
