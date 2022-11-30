@@ -24,11 +24,14 @@ export default function Card({
       name: questionName,
     };
 
-    await fetch(`api/questions/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedQuestion),
-    });
+    await fetch(
+      process.env.NEXT_PUBLIC_API_SERVER_URL + `/api/questions/${id}`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedQuestion),
+      }
+    );
 
     onUpdateQuestion();
 

@@ -14,7 +14,7 @@ export default function Form({ onAddQuestion }) {
       name: name,
     };
 
-    await fetch('/api/questions', {
+    await fetch(process.env.NEXT_PUBLIC_API_SERVER_URL + '/api/questions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newCard),
