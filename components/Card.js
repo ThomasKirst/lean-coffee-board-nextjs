@@ -13,22 +13,25 @@ export default function Card({
   onUpdateQuestion,
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [questionText, setQuestionText] = useState(text);
-  const [questionName, setQuestionName] = useState(name);
 
   async function handleSubmit(event) {
     event.preventDefault();
 
+    const formElements = event.target.elements;
+
     const updatedQuestion = {
-      text: questionText,
-      name: questionName,
+      text: formElements.name.value,
+      name: formElements.text.value
     };
 
-    await fetch(`api/questions/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedQuestion),
-    });
+    await fetch(
+      process.env.NEXT_PUBLIC_API_SERVER_URL + `api/questions/${id}`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedQuestion),
+      }
+    );
 
     onUpdateQuestion();
 
@@ -52,25 +55,19 @@ export default function Card({
       {isEditing && (
         <>
           <Form onSubmit={handleSubmit}>
-            <label htmlFor="text"></label>
             <Input
+              aria-label="Your question"
               name="text"
               id="text"
               type="text"
-              value={questionText}
-              onChange={(event) => {
-                setQuestionText(event.target.value);
-              }}
+              defaultValue={text}
             ></Input>
-            <label htmlFor="name"></label>
             <Input
+              aria-label="Author"
               name="name"
               id="name"
               type="text"
-              value={questionName}
-              onChange={(event) => {
-                setQuestionName(event.target.value);
-              }}
+              defaultValue={name}
             ></Input>
             <IconWrapper>
               <AiOutlineSave />

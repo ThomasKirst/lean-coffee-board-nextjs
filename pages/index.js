@@ -1,40 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 import Card from '../components/Card';
 import Form from '../components/Form';
-import { getAllQuestions } from '../services/questionsService';
 
-export async function getServerSideProps() {
-  const questions = await getAllQuestions();
+export default function Home() {
+  const [questions, setQuestions] = useState([]);
 
-  return {
-    props: {
-      questions: questions,
-    },
-  };
-}
-
-export default function Home({ questions }) {
-  const [questionList, setQuestionList] = useState(questions);
-
-  async function removeQuestion(id) {
-    await fetch(`api/questions/${id}`, {
-      method: 'DELETE',
-    });
+  useEffect(() => {
     getQuestions();
-  }
+  }, []);
 
   async function getQuestions() {
-    const response = await fetch('api/questions');
-    const newQuestionList = await response.json();
-    setQuestionList(newQuestionList);
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_SERVER_URL + 'api/questions'
+    );
+    const questionList = await response.json();
+    setQuestions(questionList);
+  }
+
+  async function removeQuestion(id) {
+    await fetch(
+      process.env.NEXT_PUBLIC_API_SERVER_URL + `api/questions/${id}`,
+      {
+        method: 'DELETE',
+      }
+    );
+    getQuestions();
   }
 
   return (
     <BoardWrapper>
       <CardGrid>
-        {questionList.map((question) => {
+        {questions?.map((question) => {
           return (
             <Card
               key={question.id}
