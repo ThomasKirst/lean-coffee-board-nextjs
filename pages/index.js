@@ -13,7 +13,7 @@ export default function Home() {
 
   async function getQuestions() {
     const response = await fetch(
-      `https://lean-coffee-board-api-nextjs.vercel.app/api/questions`
+      process.env.NEXT_PUBLIC_API_SERVER_URL + 'api/questions'
     );
     const questionList = await response.json();
     setQuestions(questionList);
@@ -21,7 +21,7 @@ export default function Home() {
 
   async function removeQuestion(id) {
     await fetch(
-      `https://lean-coffee-board-api-nextjs.vercel.app/api/questions/${id}`,
+      process.env.NEXT_PUBLIC_API_SERVER_URL + `api/questions/${id}`,
       {
         method: 'DELETE',
       }
